@@ -17,19 +17,21 @@ async function webCat (url) {
   // Don't include inside try, 
   // only want to test the axios call
   console.log(resp);
-  process.exit(0);
+  return resp;
+  // process.exit(0);
 }
 
 function cat(filePath) {
   // Read file from cmd line provided file name
   // End process 0 for success and 1 for error
-
+  console.log('filepath: ', filePath);
   fs.readFile(filePath, 'utf8', function(err, data){
     if (err) {
       console.log('Error occurred.');
       process.exit(1);
     } else {
       console.log('data read: ', data);
+      return data;
     }
   })
 }
@@ -38,9 +40,13 @@ function cat(filePath) {
 // either webCat (if input is url) and cat if
 // input is a file path
 
-if (process.argv[2].includes('http')) {
-  webCat(process.argv[2]);
-} else {
-  cat(process.argv[2]);
-}
+// if (process.argv[2].includes('http')) {
+//   webCat(process.argv[2]);
+// } else {
+//   cat(process.argv[2]);
+// }
 
+module.exports = {
+  cat,
+  webCat
+};
